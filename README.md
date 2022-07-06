@@ -141,16 +141,13 @@ driver = webdriver.Chrome(webdriver_ez.ie())
 
 ### 函数参数
 `chrome()` `firfox()` `edge()` `ie()`  均有如下参数
-> version: 三种参数 auto(匹配当前版本,默认)  latest(最新版本)  x.x.x(指定版本)
+	
+	version: 三种参数 auto(匹配当前版本,默认)  latest(最新版本)  x.x.x(指定版本)
+	path: 可目录(指定放置驱动文件的目录),可文件(指定驱动文件的路径,用文件就是多此一举)
+	name: 下载的驱动文件名称(下载的文件名,除非镜像源的文件改名了,否则不要改动)
+	os_type: 默认自动检测,指定只能三选一 'linux'|'win'|'mac'
 
-
-> path: 可目录(指定放置驱动文件的目录),可文件(指定驱动文件的路径,用文件就是多此一举)
-
-> name: 下载的驱动文件名称(下载的文件名,除非镜像源的文件改名了,否则不要改动)
-
-> os_type: 默认自动检测,指定只能三选一 'linux'|'win'|'mac'
-
-> 默认值: chrome(version="auto", path=None, name="chromedriver", os_type=None) 
+> 默认值: `chrome(version="auto", path=None, name="chromedriver", os_type=None) `
 
 
 ## 致谢
