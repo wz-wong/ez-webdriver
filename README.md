@@ -2,11 +2,11 @@
 
 
 
-# webdriver-ez
+# ez-webdriver
 一个下载管理浏览器驱动的python库, 优先使用国内镜像源, 单文件少依赖,调用简单,复制即用,可作为 webdriver_manager 库的国内替代
 - 获取驱动时,优先用国内镜像源,下载更快
 - 下载的驱动永久保存,每次执行时判断旧版本数量,只保留一个旧版本驱动的冗余
-- 代码精简,单文件,只需复制 webdriver_ez.py 文件到自己项目即可使用
+- 代码精简,单文件,只需复制 ez_webdriver.py 文件到自己项目即可使用
 - 修改方便,如果有新增镜像源,仅需写一个处理镜像源链接的函数即可
 
 
@@ -26,10 +26,10 @@
       <th>IE浏览器</th>
 	  </tr>
 	  <tr>
-	    <td>webdriver_ez.chrome()</td>
-	    <td>webdriver_ez.firefox()</td>
-      <td>webdriver_ez.edge()</td>
-      <td>webdriver_ez.ie()</td>
+	    <td>ez_webdriver.chrome()</td>
+	    <td>ez_webdriver.firefox()</td>
+      <td>ez_webdriver.edge()</td>
+      <td>ez_webdriver.ie()</td>
 	  </tr>
     </table>
 </div>
@@ -41,14 +41,14 @@
 
 ```python
 # selenium 4 (省略部分import,见示例)
-import webdriver_ez
-driver = webdriver.Chrome(service=Service(webdriver_ez.chrome()))
+import ez_webdriver
+driver = webdriver.Chrome(service=Service(ez_webdriver.chrome()))
 
 # selenium 3 (省略部分import,见示例)
-import webdriver_ez
-driver = webdriver.Chrome(webdriver_ez.chrome())
+import ez_webdriver
+driver = webdriver.Chrome(ez_webdriver.chrome())
 
-# 其它浏览器同理,仅需更改 webdriver_ez 后的 chrome() 改成对应浏览器即可
+# 其它浏览器同理,仅需更改 ez_webdriver 后的 chrome() 改成对应浏览器即可
 ```
 
 ## 示例
@@ -57,19 +57,19 @@ driver = webdriver.Chrome(webdriver_ez.chrome())
 # selenium 4
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-import webdriver_ez # 导入驱动管理模块
+import ez_webdriver # 导入驱动管理模块
 
-# 将 webdriver_ez.chrome() 传递给 server 参数即可
-driver = webdriver.Chrome(service=Service(webdriver_ez.chrome()))
+# 将 ez_webdriver.chrome() 传递给 server 参数即可
+driver = webdriver.Chrome(service=Service(ez_webdriver.chrome()))
 ```
 
 ```python 
 # selenium 3
 from selenium import webdriver
-import webdriver_ez # 导入驱动管理模块
+import ez_webdriver # 导入驱动管理模块
 
 # selenium 3 -->直接填入即可
-driver = webdriver.Chrome(webdriver_ez.chrome())
+driver = webdriver.Chrome(ez_webdriver.chrome())
 ```
 
 ### Firfox
@@ -77,19 +77,19 @@ driver = webdriver.Chrome(webdriver_ez.chrome())
 # selenium 4
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-import webdriver_ez # 导入驱动管理模块
+import ez_webdriver # 导入驱动管理模块
 
-# 将 webdriver_ez.firefox() 传递给 server 参数即可
-driver = webdriver.Chrome(service=Service(webdriver_ez.firefox()))
+# 将 ez_webdriver.firefox() 传递给 server 参数即可
+driver = webdriver.Chrome(service=Service(ez_webdriver.firefox()))
 ```
 
 ```python 
 # selenium 3
 from selenium import webdriver
-import webdriver_ez # 导入驱动管理模块
+import ez_webdriver # 导入驱动管理模块
 
 # selenium 3 -->直接填入即可
-driver = webdriver.Chrome(webdriver_ez.firefox())
+driver = webdriver.Chrome(ez_webdriver.firefox())
 ```
 
 ### Edge
@@ -97,19 +97,19 @@ driver = webdriver.Chrome(webdriver_ez.firefox())
 # selenium 4
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-import webdriver_ez # 导入驱动管理模块
+import ez_webdriver # 导入驱动管理模块
 
-# 将 webdriver_ez.edge() 传递给 server 参数即可
-driver = webdriver.Chrome(service=Service(webdriver_ez.edge()))
+# 将 ez_webdriver.edge() 传递给 server 参数即可
+driver = webdriver.Chrome(service=Service(ez_webdriver.edge()))
 ```
 
 ```python 
 # selenium 3
 from selenium import webdriver
-import webdriver_ez # 导入驱动管理模块
+import ez_webdriver # 导入驱动管理模块
 
 # selenium 3 -->直接填入即可
-driver = webdriver.Chrome(webdriver_ez.edge())
+driver = webdriver.Chrome(ez_webdriver.edge())
 ```
 
 ### IE
@@ -117,19 +117,19 @@ driver = webdriver.Chrome(webdriver_ez.edge())
 # selenium 4
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-import webdriver_ez # 导入驱动管理模块
+import ez_webdriver # 导入驱动管理模块
 
-# 将 webdriver_ez.ie() 传递给 server 参数即可
-driver = webdriver.Chrome(service=Service(webdriver_ez.ie()))
+# 将 ez_webdriver.ie() 传递给 server 参数即可
+driver = webdriver.Chrome(service=Service(ez_webdriver.ie()))
 ```
 
 ```python 
 # selenium 3
 from selenium import webdriver
-import webdriver_ez # 导入驱动管理模块
+import ez_webdriver # 导入驱动管理模块
 
 # selenium 3 -->直接填入即可
-driver = webdriver.Chrome(webdriver_ez.ie())
+driver = webdriver.Chrome(ez_webdriver.ie())
 ```
 
 ## 全部函数及实现
