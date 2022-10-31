@@ -118,9 +118,9 @@ def ie(version="auto", path=None, name="IEDriverServer", os_type=None, is_arm=Fa
 
 def clear(path=None) -> None:
     """
-    path: 指定清除的目录(会删除目录下所有文件)
+    path: 清除缓存(删除保存的所有驱动文件)
     清除驱动缓存,清空默认目录 _webdriver 下所有内容
-    (适用驱动文件损坏或想移除已下载的驱动,驱动默认最多只保留1个冗余版本)
+    (适用驱动文件损坏或想移除已下载的驱动,驱动默认每种浏览器保留1个冗余版本)
     """
     if path:
         if not Path(path).is_dir():
@@ -159,8 +159,12 @@ def __handle(path, dict_sys, browser_type, version, browser_version):
     file_url = __func_select(browser_type, dict_sys, version)
     if not file_url:
         return ''
+    # 删除冗余文件
+    sys_type = dict_sys['os'] + '64' if dict_sys['is_64'] else dict_sys['os'] + '32'
+    __clear_old_version(dir_path, sys_type)
     # 根据下载连接,下载解压文件
     result = __save_file(path_driver, file_url)
+    # 返回路径
     print(f'--> 驱动路径 {browser_type} : {result}')
     return str(result.absolute())
 
@@ -664,8 +668,6 @@ def __check_file(path, dict_sys, browser_type, version) -> Path:
     dir_path.mkdir(parents=True, exist_ok=True)
     sys_bit = '64' if dict_sys['is_64'] else '32'
     sys_type = dict_sys['os'] + sys_bit
-    __clear_old_version(dir_path,sys_type)
-
     _ = sys_type + '-' + version
     dir_file = dir_path / browser_type / _
     if dir_file.is_dir():
@@ -678,7 +680,16 @@ def __check_file(path, dict_sys, browser_type, version) -> Path:
 
 
 def __clear_old_version(dir_path,sys_type):
-    pass
+    """下载文件前检查,存在2个以上就只留一个"""
+    try:
+        lst_dir = list(dir_path.glob(sys_type+'.*'))
+        if len(lst_dir)>1:
+            for i in lst_dir[1:].sort(reverse=True):
+                os.remove(i)
+    except:
+        pass
+
+
 
 
 def __save_file(path_driver, file_url) -> Union[Path, str]:
@@ -695,7 +706,6 @@ def __save_file(path_driver, file_url) -> Union[Path, str]:
             print("\r%s %.2f%%" % (show_progress, percent * 100), end='')
 
         # 断点续传
-
         temp_size = file_path.stat().st_size if file_path.exists() else 0
         s.headers.update({'Range': 'bytes=%d-' % temp_size, })
         res_left = s.get(file_url, stream=True)
