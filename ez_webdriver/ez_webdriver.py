@@ -28,7 +28,8 @@ def chrome(version="auto", path=None, name="chromedriver", os_type=None, is_arm=
     version: 三种参数 auto(当前版本-默认)  latest(最新版本)  x.x(指定版本,2级就够,太细的版本可能匹配不到)
     path: 可以是目录(指定放置驱动文件的目录),可以是文件(指定驱动文件的路径)
     name: 下载的驱动文件名称(下载的文件名,除非镜像源的文件改名了,否则不要改动)
-    os_type: 默认自动检测,指定只能三选一['linux', 'win', 'mac']
+    os_type: 默认自动,手动填入系统信息,e.g. "win64" , "linux32-arm", "mac64 arm"
+    is_arm: 默认自动,是否ARM架构,匹配对应 arm/aarch64 驱动
     """
     # 判断版本
     browser_type = 'chrome'
@@ -44,7 +45,8 @@ def firefox(version="auto", path=None, name="geckodriver", os_type=None, is_arm=
     version: 三种参数 auto(当前版本-默认)  latest(最新版本)  x.x(指定版本,2级就够,太细的版本可能匹配不到)
     path: 可以是目录(指定放置驱动文件的目录),可以是文件(指定驱动文件的路径)
     name: 下载的驱动文件名称(下载的文件名,除非镜像源的文件改名了,否则不要改动)
-    os_type: 默认自动检测,指定只能三选一['linux', 'win', 'mac']
+    os_type: 默认自动,手动填入系统信息,e.g. "win64" , "linux32-arm", "mac64 arm"
+    is_arm: 默认自动,是否ARM架构,匹配对应 arm/aarch64 驱动
     """
     # 判断版本
     browser_type = 'firefox'
@@ -78,7 +80,8 @@ def edge(version="auto", path=None, name="edgedriver", os_type=None, is_arm=Fals
     version: 三种参数 auto(当前版本-默认)  latest(最新版本)  x.x(指定版本,2级就够,太细的版本可能匹配不到)
     path: 可以是目录(指定放置驱动文件的目录),可以是文件(指定驱动文件的路径)
     name: 下载的驱动文件名称(下载的文件名,除非镜像源的文件改名了,否则不要改动)
-    os_type: 默认自动检测,指定只能三选一['linux', 'win', 'mac']
+    os_type: 默认自动,手动填入系统信息,e.g. "win64" , "linux32-arm", "mac64 arm"
+    is_arm: 默认自动,是否ARM架构,匹配对应 arm/aarch64 驱动
     """
     # 判断版本
     browser_type = 'edge'
@@ -94,7 +97,8 @@ def ie(version="auto", path=None, name="IEDriverServer", os_type=None, is_arm=Fa
     version: 三种参数 auto(当前版本-默认)  latest(最新版本)  x.x(指定版本,2级就够,太细的版本可能匹配不到)
     path: 可以是目录(指定放置驱动文件的目录),可以是文件(指定驱动文件的路径)
     name: 下载的驱动文件名称(下载的文件名,除非镜像源的文件改名了,否则不要改动)
-    os_type: 默认自动检测,指定只能三选一['linux', 'win', 'mac']
+    os_type: 默认自动,手动填入系统信息,e.g. "win64" , "linux32-arm", "mac64 arm"
+    is_arm: 默认自动,是否ARM架构,匹配对应 arm/aarch64 驱动
     """
     # 判断版本
     browser_type = 'ie'
@@ -112,11 +116,11 @@ def ie(version="auto", path=None, name="IEDriverServer", os_type=None, is_arm=Fa
     return __handle(path, dict_sys, browser_type, version, browser_version)
 
 
-def clear_cache(path=None) -> None:
+def clear(path=None) -> None:
     """
     path: 指定清除的目录(会删除目录下所有文件)
     清除驱动缓存,清空默认目录 _webdriver 下所有内容
-    (适用驱动文件损坏或时间太久累积了较多无用驱动)
+    (适用驱动文件损坏或想移除已下载的驱动,驱动默认最多只保留1个冗余版本)
     """
     if path:
         if not Path(path).is_dir():
@@ -656,11 +660,13 @@ def __by_microsoft_html(url, lst_name, version) -> str:
 # ----------------------保存驱动文件部分(返回Path路径)
 def __check_file(path, dict_sys, browser_type, version) -> Path:
     """"检查目录下是否有对应浏览器版本的驱动文件"""
-
     dir_path = Path(path) if path else Path(dir_pre / '_webdriver')
     dir_path.mkdir(parents=True, exist_ok=True)
     sys_bit = '64' if dict_sys['is_64'] else '32'
-    _ = version + '-' + dict_sys['os'] + '-' + sys_bit
+    sys_type = dict_sys['os'] + sys_bit
+    __clear_old_version(dir_path,sys_type)
+
+    _ = sys_type + '-' + version
     dir_file = dir_path / browser_type / _
     if dir_file.is_dir():
         for f in dir_file.glob('*.*'):
@@ -669,6 +675,10 @@ def __check_file(path, dict_sys, browser_type, version) -> Path:
 
     dir_file.mkdir(parents=True, exist_ok=True)  # 创建对应目录
     return dir_file
+
+
+def __clear_old_version(dir_path,sys_type):
+    pass
 
 
 def __save_file(path_driver, file_url) -> Union[Path, str]:
