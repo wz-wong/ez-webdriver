@@ -587,7 +587,7 @@ def __by_githubapi_json(url, lst_name, version) -> str:
     # 获取所有版本  (网页返回的是json)
     f_url_default = None
     s = __session()
-    lst_data = json.loads(s.get(url, timeout=5, allow_redirects=False, verify=False).text)
+    lst_data = json.loads(s.get(url, allow_redirects=False, verify=False).text)
     if not isinstance(lst_data, list):
         return ''
     d_version = {}
