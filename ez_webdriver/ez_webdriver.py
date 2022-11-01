@@ -520,7 +520,7 @@ def __by_npmmirror_json(url, dict_sys, version) -> str:
     """
     # 获取所有版本  (网页返回的是json)
     s = __session()
-    lst_data = json.loads(s.get(url,timeout=).text)
+    lst_data = json.loads(s.get(url).text)
     d_version = {}
     for dt in lst_data:
         if '/' not in dt['name']:  # 剔除非目录的
