@@ -8,16 +8,32 @@
 - 下载的驱动永久保存,每次执行时判断旧版本数量,只保留一个旧版本驱动的冗余
 - 代码精简,单文件,只需复制 ez_webdriver.py 文件到自己项目即可使用
 - 修改方便,如果有新增镜像源,仅需写一个处理镜像源链接的函数即可
-- 手动指定arm平台(没找到判断arm的办法)
+- 可以识别arm平台
 
 
 ## 支持的浏览器/For now support:
 
-[谷歌浏览器/ChromeDriver](#chrome) [火狐浏览器/GeckoDriver](#use-with-firefox) [Edge浏览器/EdgeChromiumDriver](#use-with-edge) [IE浏览器/IEDriver](#use-with-ie)
+[谷歌浏览器/ChromeDriver](#chrome) 
+[火狐浏览器/GeckoDriver](#use-with-firefox)
+[Edge浏览器/EdgeChromiumDriver](#use-with-edge) 
+[IE浏览器/IEDriver](#use-with-ie)
 
 ## 演示
 
 
+## 安装
+> 方法1 : pip安装
+
+`pip install ez-webdriver`
+```python
+import ez_webdriver 
+ez_webdriver.chrome()    # 返回驱动文件绝对路径(str)
+```
+> 方法2 : 拷贝 `ez-webdriver.py` 文件,直接使用
+```python
+from ez_webdriver import chrome,firefox
+chrome(version='107.0')  # 返回指定版本驱动文件绝对路径(str)
+```
 
 ## 用法/Usage:
 <div>

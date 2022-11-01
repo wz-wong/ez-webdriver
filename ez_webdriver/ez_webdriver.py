@@ -159,9 +159,6 @@ def __handle(path, dict_sys, browser_type, version, browser_version):
     file_url = __func_select(browser_type, dict_sys, version)
     if not file_url:
         return ''
-    # 删除冗余文件
-    sys_type = dict_sys['os'] + '64' if dict_sys['is_64'] else dict_sys['os'] + '32'
-    __clear_old_version(dir_path, sys_type)
     # 根据下载连接,下载解压文件
     result = __save_file(path_driver, file_url)
     # 返回路径
@@ -674,7 +671,9 @@ def __check_file(path, dict_sys, browser_type, version) -> Path:
         for f in dir_file.glob('*.*'):
             if f.stem == dict_sys['file_name']:
                 return f
-
+    # 删除冗余文件
+    sys_type = dict_sys['os'] + '64' if dict_sys['is_64'] else dict_sys['os'] + '32'
+    __clear_old_version(dir_path, sys_type)
     dir_file.mkdir(parents=True, exist_ok=True)  # 创建对应目录
     return dir_file
 
