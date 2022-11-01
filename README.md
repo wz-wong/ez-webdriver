@@ -19,7 +19,7 @@
 [IE浏览器/IEDriver](#use-with-ie)
 
 ## 演示
-
+![img](https://github.com/wz-wong/img-store/blob/main/ez-webdriver.gif)
 
 ## 安装
 > 方法1 : pip安装
